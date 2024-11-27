@@ -195,11 +195,11 @@ class Book:
 
             delete_base_json = json.load(delete_file)
             
+            print('\n')
 
+            user_input_id = int(input('Введите id книги, чтобы ее удалить из реестра ->  '))
 
-            user_input = int(input('удалить - '))
-
-            book_id = user_input - 1
+            book_id = user_input_id - 1
             
             
 
@@ -209,7 +209,7 @@ class Book:
                 
                 
 
-                if book['id'] == user_input:
+                if book['id'] == user_input_id:
                     
                     delete_base_json.pop(book_id)
 
@@ -219,11 +219,14 @@ class Book:
                     
                     open('database.json', 'w').close()
                     
-                    
+
                     delete_file.seek(0)
                     delete_file.write(json.dumps(self.databases,  ensure_ascii=False, indent=4))
                     delete_file.seek(0)
 
+                    print(f'\nКнига с id - {user_input_id} успешно удалена.')
+
+                    self.read()
 
                 
 
