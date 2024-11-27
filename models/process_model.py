@@ -30,7 +30,7 @@ class ProcessPolling:
             user_input = input('Введите команду: -> ')
 
             if user_input == '1':
-                self.book.add_to_book()
+                self.book.add()
             
             elif user_input == '2':
                 self.book.delete()

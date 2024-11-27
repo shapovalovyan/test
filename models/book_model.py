@@ -9,7 +9,7 @@ class Book:
 
 
 
-    def add_to_book(self):
+    def add(self):
         
         print(f"\n{'':-<10} {'':*>10} {'':->10}\n")
         print(f"{'': <7} Меню Добавление {'': >7}\n")
@@ -19,7 +19,7 @@ class Book:
         print('Для добавление в реестр необходимо ввести книгу')
         print('в формате "Название, Автор, Год" через запятую.\n')
         print('*Например: ', end='-> ')
-        print('Война и мир, Толстой Лев Николаевич, 1867.')
+        print('Война и Мир, Толстой Лев Николаевич, 1867.')
 
 
         text = input('Ввод: ')
@@ -66,17 +66,15 @@ class Book:
 
     def read(self):
         
-        print(f"\n{'':-<10} {'':*>10} {'':->10}\n")
-        print(f"{'': <7} Отображение списка книг {'': >7}\n")
-        print(f"{'':-<10} {'':*>10} {'':->10}\n")
+        # print(f"\n{'':-<10} {'':*>10} {'':->10}\n")
+        # print(f"{'': <7} Отображение списка книг {'': >7}\n")
+        # print(f"{'':-<10} {'':*>10} {'':->10}\n")
         
             
 
         with open('database.json', 'r') as read_file:
 
-            print('Прочитано')
-
-
+            
             database = json.load(read_file)
             
             print(f"{' ':_<54}{' ':_>54}")
@@ -94,8 +92,6 @@ class Book:
 
             
             for book in database:
-
-
 
                 
                 print(f"{'|': <7}{'|': >7}{'|':>31}{'|':>29}{'|':>15}{'|':>19}")
@@ -131,7 +127,7 @@ class Book:
 
 
         print(f"\n{'':-<10} {'':*>10} {'':->10}\n")
-        print(f"{'': <7} Отображение списка книг {'': >7}\n")
+        print(f"{'': <7} Поиск книг {'': >7}\n")
         print(f"{'':-<10} {'':*>10} {'':->10}\n")
         
             
@@ -189,39 +185,47 @@ class Book:
 
 
     def delete(self):
+
+
+        self.read()
             
         
-        with open('database.json', 'r+') as read_file:
+        with open('database.json', 'r+', encoding='utf-8') as delete_file:
 
 
-            database: list = json.load(read_file)
+            delete_base_json = json.load(delete_file)
             
 
-            print(type(database))
-            print(database)
 
+            user_input = int(input('удалить - '))
 
-
-            x = int(input('удалить - '))
-
-
+            book_id = user_input - 1
             
-            for book in database:
+            
 
-                if book['id'] == x:
+            self.databases.clear()
+
+            for book in delete_base_json:
+                
+                
+
+                if book['id'] == user_input:
                     
-                    database.pop(database.index(book))
+                    delete_base_json.pop(book_id)
+
+
+                    self.databases.extend(delete_base_json)
 
                     
+                    open('database.json', 'w').close()
                     
                     
-
+                    delete_file.seek(0)
+                    delete_file.write(json.dumps(self.databases,  ensure_ascii=False, indent=4))
+                    delete_file.seek(0)
 
 
                 
-
-    
-
 
 
     def status(self):
